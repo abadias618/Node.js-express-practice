@@ -1,10 +1,22 @@
     heroku commands:
-heroku init dorashoestore
+heroku create dorashoestore
 
     git commands:
 git init
+git add .
+git commit -m "com"
+git push heroku master
+git remote add github "url"
+//check
+git remote -v
+
     node commands executed:
 npm init
 npm install express
 npm install path
 npm install express-session
+npm install pg
+npm install express-ejs-layouts --save
+npm install ejs
+
+
