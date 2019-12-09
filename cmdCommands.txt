@@ -1,0 +1,10 @@
+    heroku commands:
+heroku init dorashoestore
+
+    git commands:
+git init
+    node commands executed:
+npm init
+npm install express
+npm install path
+npm install express-session
