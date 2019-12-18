@@ -1,5 +1,6 @@
     heroku commands:
 heroku create dorashoestore
+heroku addons:create heroku-postgresql:hobby-dev
 
     git commands:
 git init

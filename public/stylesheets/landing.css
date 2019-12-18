@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 html, body{
-  height: 100%;
-  width: 100%;
+  background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%; 
+  /*width: 100%;*/
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: #000;
 }
@@ -62,6 +65,8 @@ html, body{
   margin-top: .3rem;
   margin-bottom: 1rem;
 }
+
+/*fontawsome bottom links*/
 .fa-pencil-alt, .fa-archway, .fa-paint-brush{
   font-size: 4em;
   margin: 1rem;
@@ -75,6 +80,7 @@ footer{
   color: antiquewhite;
   padding-top: 2rem;
 }
+
 .carousel-item {
   transition: -webkit-transform 0.5s ease;
   transition: transform 0.5s ease;

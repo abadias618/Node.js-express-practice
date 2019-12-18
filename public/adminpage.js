@@ -16,9 +16,9 @@ function login() {
 
 
 
-	$.post("/login", params, function(result) {
+	$.post("/adminLog", params, function(resultFromServer) {
 
-		if (result && result.success) {
+		if (resultFromServer && resultFromServer.success) {
 
 			$("#status").text("Successfully logged in.");
 

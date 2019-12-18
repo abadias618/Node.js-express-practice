@@ -1,0 +1,9 @@
+CREATE TABLE admin_table (
+
+    id SERIAL PRIMARY KEY,
+    username VARCHAR NOT NULL,
+    password VARCHAR NOT NULL
+
+);
+INSERT INTO admin_table (username,password)
+VALUES ('admin','pass');
