@@ -7,3 +7,14 @@ CREATE TABLE admin_table (
 );
 INSERT INTO admin_table (username,password)
 VALUES ('admin','pass');
+
+---------------------------------------
+
+CREATE TABLE main_table (
+    id SERIAL PRIMARY KEY,
+    shoe_name VARCHAR NOT NULL,
+    shoe_color VARCHAR NOT NULL,
+    shoe_size VARCHAR NOT NULL,
+    shoe_url VARCHAR NOT NULL
+);
+

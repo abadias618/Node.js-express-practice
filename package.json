@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "ejs": "^3.0.1",
+    "ejs-lint": "^0.3.0",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.0",

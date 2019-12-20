@@ -34,78 +34,74 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 app.get('/', (req, res) => res.render('pages/landingpage'));
 //admin page route
 app.get('/admin', (req, res) => res.render('pages/adminpage'));
-app.post('/adminLog', (req, res) => 
-{
-    console.log(req.body.username);
-    console.log(req.body.password);
-    /*pool.connect();
-    async function executeValidate()
-    {
-      try {
-          
-          const result = pool.query('SELECT password FROM admin_table WHERE username = $1', [req.body.username], (err, res) => {
-            done();
-          if (err) {
-            console.log(err.stack);
-          }
-          else {
-            
-            //
-            return res.rows[0];
-          }
-        });
-        console.log('this is the pass variable ', result.password);
-        
-        return result;
-      } catch (error) {
-        console.log(error);
+
+app.post('/adminLog', async (req, res) => {
+  if (req.body.username && req.body.password) {
+    try {
+      var response = await pool.query('SELECT password FROM admin_table WHERE password = $1',[req.body.password]);
+      console.log(response.rows[0]);
+      if (response.rowCount > 0 && response.rows[0].password==req.body.password) {
+        console.log('success login');
+        req.session.user="admin";
+        res.json({redirect: '/successfulLogin', 
+        success: true});
+        console.log('after res.json');
       }
+      else {
+        console.log('unsuccsess login');
+        req.session.user=null;
+        res.json({redirect: '/unsuccessfulLogin',
+        success: false});
+        console.log('after res.json');
+      }
+    } catch (error) {
+      console.log(error);
     }
-    const passwd = pool.connect( function(err){
-      if(err) throw err;
-      pool.query('SELECT password FROM admin_table WHERE username = $1',[req.body.username],(err, res) => {
-        if (err) {
-          console.log(err.stack)
-        } else {
-          var pass=res.rows[0];
-          console.log('this is the pass variable ',pass.password);
+  } 
+    
+});
+
+app.get('/successfulLogin', (req, res) => res.render('pages/successfulLogin'));
+app.get('/unsuccessfulLogin', (req, res) => res.render('pages/unsuccessfulLogin'));
+app.get('/submitNewElement', (req, res) => res.render('pages/submitNewElement'));
+
+app.post('/insert', (req, res) => {
+  try {
+    var name = req.body.name;
+    var color = req.body.color;
+    var size = req.body.size;
+    var url = req.body.url;
+
+    var response = pool.query('INSERT INTO main_table (shoe_name,shoe_color,shoe_size,shoe_url) VALUES ($1,$2,$3,$4)',[name,color,size,url]);
+    if (response) {
+      console.log('done;');
+    }
+    res.json({success: true});
+    console.log('success inserting');
+     
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get('/inventory', (req, res) => res.render('pages/adminInventory'));
+app.get('/getInventory', async (req, res) => {
+  var result = await pool.query("SELECT * FROM main_table");
+  console.log(result);
+  console.log(typeof(result));
+  res.render('pages/adminInventory', result, rmWhitespace);
+  /*res.write("<table>");
+    res.write("<tr>");
+    for(var column in result.fields){
+        res.write("<td><label>" + result.fields[column].name + "</label></td>");
+    }
+    res.write("</tr>");
+    for(var row in result.rows){
+        res.write("<tr>");
+        for(var column in result.rows[row]){
+            res.write("<td><label>" + result.rows[row][column] + "</label></td>");       
         }
-        
-      });
-      return pass;
-    });
-    
-      //pool.end();
-    var resultFromServer = {success: false};
-    const resul=executeValidate();
-    pool.end();
-    */
-  pool
-    .query('SELECT password FROM admin_table WHERE username = $1',[req.body.username])
-    .then (res => console.log(res.rows[0]))
-    .then (async function(){
-          if (res.rows[0]==req.body.password) 
-          {
-              req.session.user="admin";
-              //resultFromServer={success: true};
-              console.log('successful login!!!');
-              res.render('pages/successfullogin');
-              
-          }
-          else
-          {
-              res.render('pages/unsuccesfullLogin');
-          }
-    })
-    .catch(err=>
-      setImmediate(()=>{
-        throw err;
-      })
-      )
-    
-    
-    //res.json(resultFromServer);
-}
-);
-
-
+        res.write("</tr>");         
+    }
+    res.write("</table>");*/
+  });

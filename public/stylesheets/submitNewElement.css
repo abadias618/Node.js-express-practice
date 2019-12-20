@@ -7,17 +7,19 @@ height: 100%;
 font-family: Verdana, Geneva, Tahoma, sans-serif;
 color:#000;
 }
-
+h4, h5{
+    color: #fff;
+}
 .container{
 height: 100%;
 align-content: center;
 }
 
 .card{
-height: 370px;
+height: 550px;
 margin-top: auto;
 margin-bottom: auto;
-width: 400px;
+width: 650px;
 background-color: rgba(0,0,0,0.5) !important;
 }
 
@@ -54,7 +56,7 @@ outline: 0 0 0 0  !important;
 box-shadow: 0 0 0 0 !important;
 
 }
-
+/*in this case its the upload button*/
 .login_btn{
 color: black;
 background-color: rgb(148, 147, 144);
@@ -75,7 +77,6 @@ margin-left: 4px;
 }
 
 /*fontawsome bottom links*/
-
   .social a{
     font-size: 4em;
     padding: 3rem;

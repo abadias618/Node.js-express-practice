@@ -14,64 +14,25 @@ function login() {
 
 	};
 
+	console.log('executed params and about to enter ajax');
+	$.post('/adminLog', params, function(result) {
 
+		console.log('inside ajax');	
+		if (result && result.success == true) {
 
-	$.post("/adminLog", params, function(resultFromServer) {
-
-		if (resultFromServer && resultFromServer.success) {
-
-			$("#status").text("Successfully logged in.");
-
-		} else {
-
-			$("#status").text("Error logging in.");
-
-		}
-
-	});
-
-}
-
-
-
-function logout() {
-
-	$.post("/logout", function(result) {
-
-		if (result && result.success) {
-
-			$("#status").text("Successfully logged out.");
+			//$("#status").text("Successfully logged in.");
+			console.log('logged in in ajax');
+			window.location.href = result.redirect;
 
 		} else {
 
-			$("#status").text("Error logging out.");
-
+			//$("#status").text("Error logging in.");
+			console.log('not logged in in ajax');
+			window.location.href = result.redirect;
 		}
 
 	});
+	
 
 }
 
-
-
-function getServerTime() {
-
-	$.get("/getServerTime", function(result) {
-
-		if (result && result.success) {
-
-			$("#status").text("Server time: " + result.time);
-
-		} else {
-
-			$("#status").text("Got a result back, but it wasn't a success. Your reponse should have had a 401 status code.");
-
-		}
-
-	}).fail(function(result) {
-
-		$("#status").text("Could not get server time.");
-
-	});
-
-}

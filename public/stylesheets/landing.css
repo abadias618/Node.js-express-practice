@@ -1,13 +1,73 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
-html, body{
-  background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100%; 
-  /*width: 100%;*/
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: #000;
+html,body{
+background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%; 
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+color: #000;
+background-attachment: fixed;
 }
+/*cards pseudo grid*/
+.col-md-4{padding:15px;}
+
+/*not necessary*/
+
+.profile-card-2 .card-img-block{
+    float:left;
+    width:100%;
+    height:150px;
+    overflow:hidden;
+}
+.profile-card-2 .card-body{
+    position:relative;
+    /*manipulate card color*/
+}
+.profile-card-2 .profile {
+  border-radius: 50%;
+  position: absolute;
+  top: -42px;
+  left: 15%;
+  max-width: 75px;
+  border: 3px solid  #fff;
+  -webkit-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+  
+}
+.profile-card-2 h5{
+    font-weight:600;
+    color:#007bff;
+}
+.profile-card-2 .card-text{
+    font-weight:300;
+    font-size:15px;
+}
+.profile-card-2 .icon-block{
+    float:left;
+    width:100%;
+}
+.profile-card-2 .icon-block a{
+    text-decoration:none;
+}
+.profile-card-2 i {
+  display: inline-block;
+    font-size: 16px;
+    color: #007bff;
+    text-align: center;
+    border: 1px solid #007bff;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    margin:0 5px;
+}
+.profile-card-2 i:hover {
+  background-color:#007bff;
+  color:#fff;
+}
+
+
+/*navbar things*/
 .navbar{
   padding: .8rem;
 }
@@ -17,60 +77,10 @@ html, body{
 .nav-link{
   font-size: 1.1em !important;
 }
-.carousel-inner img {
-  position: relative;
-  width: 100%;
-  height: 30%;
-}
-.carousel-caption{
-  position: absolute;
-  top:70%;
-  transform: translateY(-50%);
-  color: rgb(194, 196, 209);
-}
-.carousel-caption h1{
-  font-size: 500%;
-  text-transform: uppercase;
-  text-shadow: 2px 2px 15px #000;
-}
-.carousel-caption h3{
-  font-size: 200%;
-  font-weight: 500;
-  text-shadow: 2px 2px 15px #000;
-  padding-bottom: 1rem;
-}
-.btn-primary{
-  background-color: #000;
-  border: 2px solid #ffffff;
-}
-.btn-primary:hover{
-  background-color: #424242;
-  border: 2px solid #000;
-}
-.jumbotron{
-  padding: 1rem;
-  border-radius: 10px;
-}
-.padding{
-  padding-bottom: 2rem;
-}
-.welcome{
-  width: 75%;
-  margin: 0 auto; 
-  padding-top: 2rem;
-}
-.welcome hr {
-  border-top: 2px solid rgb(41, 41, 41);
-  width: 95%;
-  margin-top: .3rem;
-  margin-bottom: 1rem;
-}
+
 
 /*fontawsome bottom links*/
-.fa-pencil-alt, .fa-archway, .fa-paint-brush{
-  font-size: 4em;
-  margin: 1rem;
-}
+
 .social a{
   font-size: 4em;
   padding: 3rem;
@@ -79,24 +89,4 @@ footer{
   background-color: black;
   color: antiquewhite;
   padding-top: 2rem;
-}
-
-.carousel-item {
-  transition: -webkit-transform 0.5s ease;
-  transition: transform 0.5s ease;
-  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
-}
-[class*="col-"] {
-    padding: 1rem;
-}
-form{
-  text-align: center;
-}
-form>a{
-  text-align: center;
-}
-form>h1{
-  text-align: center;
 }
