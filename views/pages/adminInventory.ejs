@@ -2,45 +2,60 @@
 <html>
 
 <head>
-    <%-include('../partials/head');%>
+    <%-include('../partials/head')%>
     <link rel="stylesheet" href="../stylesheets/adminInventory.css">
 </head>
 
 <body>
-    <main>
-        <%-include('../partials/header');%>
-    </main>
-    <div id="table">
-        <table>
-            <tr>
-            <%for(var column in%> 
-            <%=result.fields%>
-            <%){%>    
-                <td><label><%=result.fields[column].name%></label></td>
-            </tr>
-            <%}%>
+    <%-include('../partials/header')%>
+    <script>
+        $("#navbarResponsiveList").append("<li class=\"nav-item active\">");
+        $("#navbarResponsiveList").append("<a class=\"nav-link\" href=\"/submitNewElement\">Add Item</a>");
+        $("#navbarResponsiveList").append("</li>");
+    </script>
 
-            <%for(var row in %> 
-            <%=result.rows%>
-            <%){%>
-            <tr>
-                <%for(var column in %>
-                <%=result.rows[row]%>
-                <%){%>
-                <td>
-                    <label>
-                        <%=result.rows[row][column]%>
-                    </label>
-                </td>
-                <%}%>
-            </tr>
-            <%}%>
-        </table>
+    <div class="container">
+        <h1>Here's what you've got...</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Shoes</h3>
+                    </div>
+
+                    <table class="table table-hover" id="dev-table">
+                        <thead>
+                            <tr>
+                                <%for(var column in result.fields){%>
+                                <th><%=result.fields[column].name%></th>
+                                <%}%>
+                                </tr>
+                        </thead>
+                            <tbody>
+                                <%for(var row in result.rows){%>
+                            <tr>
+                                <%var counter=0%>
+                                <%for(var column in result.rows[row]){%>
+                                    <%if(counter==4){%>
+                                        <td><img src= <%=result.rows[row][column]%> height="200" width="200"></td>
+                                    <%}else{%>
+                                        <td><%=result.rows[row][column]%></td>
+                                    <%}%>
+                                    <%counter++%>
+                                
+                                <%}%>
+                                    </tr>
+                                <%}%>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <footer>
-        <%- include('../partials/footer');%>
-    </footer>
+
+        <footer>
+            <%- include('../partials/footer')%>
+        </footer>
 </body>
 
 </html>

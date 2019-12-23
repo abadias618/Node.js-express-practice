@@ -8,9 +8,21 @@
     </head>
 
     <body>
-        <main>
-                <%- include('../partials/header'); %>
-        </main>
+        
+    <%- include('../partials/header'); %>
+    <script>
+        $("#log").remove();
+        $("#navbarResponsiveList").append("<li class=\"nav-item active\">");
+        $("#navbarResponsiveList").append("<a class=\"nav-link\" href=\"/submitNewElement\">Add Item</a>");
+        $("#navbarResponsiveList").append("</li>");
+        
+        $("#navbarResponsiveList").append("<li class=\"nav-item active\">");
+        $("#navbarResponsiveList").append("<a class=\"nav-link\" href=\"/getInventory\">Inventory</a>");
+        $("#navbarResponsiveList").append("</li>");
+        
+    </script>
+    
+        
 
         <div class="container">
             <div class="d-flex justify-content-center h-100">

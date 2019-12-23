@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+html,body{
+background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+color:#fff;
+background-attachment: fixed;
+}
+
+.container{
+    width: auto;
+    align-content: center;
+    }
+.row{
+    margin-top:40px;
+    padding: 0 10px;
+}
+.panel-heading div {
+    margin-top: -18px;
+    font-size: 20px;
+}
+.table{
+    font-size: 17px;
+}
+
+
+/*fontawsome bottom links*/
+
+  .social a{
+    font-size: 4em;
+    padding: 3rem;
+  }
+  footer{
+    background-color: black;
+    color: antiquewhite;
+    padding-top: 2rem;
+  }

@@ -10,8 +10,10 @@ const path = require('path');
 const PORT = process.env.PORT || 5000;
 const app = express();
 const ejslayouts = require('express-ejs-layouts');
-const session = require('express-session'); 
+const session = require('express-session');
 const bodyParser = require('body-parser');
+//to use json ecoded bodies
+app.use(express.json());
 //recognize body
 app.use(express.urlencoded({ extended: true }));
 //setup paths for public and views folders 
@@ -21,87 +23,112 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 // set up sessions
 app.use(session({
-    name: 'server-session-cookie-id',
-    secret: 'my express secret',
-    saveUninitialized: true,
-    resave: true,
+  name: 'server-session-cookie-id',
+  secret: 'my express secret',
+  saveUninitialized: true,
+  resave: true,
 }));
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 //-------------------------------------------------------------
-//  LANDING PAGES
+//  LANDING PAGE
 //-------------------------------------------------------------
-//landing page route
-app.get('/', (req, res) => res.render('pages/landingpage'));
-//admin page route
+app.get('/',(req, res) =>{res.render('pages/landingpage')} );
+//-------------------------------------------------------------
+//  ADMIN LOGIN PAGE
+//-------------------------------------------------------------
 app.get('/admin', (req, res) => res.render('pages/adminpage'));
+//-------------------------------------------------------------
+//  VALIDATE LOGIN INFO (NOT SHOWN TO THE USER)
+//-------------------------------------------------------------
 
-app.post('/adminLog', async (req, res) => {
+app.post('/adminLog', getPass);
+
+//PROCESS THE DATA FROM DB
+function getPass(req, res) {
   if (req.body.username && req.body.password) {
-    try {
-      var response = await pool.query('SELECT password FROM admin_table WHERE password = $1',[req.body.password]);
-      console.log(response.rows[0]);
-      if (response.rowCount > 0 && response.rows[0].password==req.body.password) {
-        console.log('success login');
-        req.session.user="admin";
-        res.json({redirect: '/successfulLogin', 
-        success: true});
-        console.log('after res.json');
+    pool.query('SELECT password FROM admin_table WHERE password = $1', [req.body.password], function (err, response) {
+      if (err) {
+        console.log(err);
       }
       else {
-        console.log('unsuccsess login');
-        req.session.user=null;
-        res.json({redirect: '/unsuccessfulLogin',
-        success: false});
-        console.log('after res.json');
+        main(response, req, res);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  } 
-    
-});
-
-app.get('/successfulLogin', (req, res) => res.render('pages/successfulLogin'));
-app.get('/unsuccessfulLogin', (req, res) => res.render('pages/unsuccessfulLogin'));
+    });
+  }
+}
+//MAIN LOGIC FOR CREDENTIAL VALIDATION
+function main(response,req,res) {
+  console.log(response.rows[0]);
+  if (response.rowCount > 0 && response.rows[0].password == req.body.password) {
+    console.log('success login');
+    req.session.user = "admin";
+    var result = { success: true , redirect: '/getInventory'};
+    res.json(result);
+  }
+  else {
+    console.log('bad login');
+    req.session.user = "";
+    var result = { success: false };
+    res.json(result);
+  }
+}
+//-------------------------------------------------------------
+//  SUBMIT AN ELEMENT TO BE INSERTED TO INVENTORY PAGE
+//-------------------------------------------------------------
 app.get('/submitNewElement', (req, res) => res.render('pages/submitNewElement'));
-
+//-------------------------------------------------------------
+//  INSERT A NEW ITEM TO INVENTORY PAGE
+//-------------------------------------------------------------
 app.post('/insert', (req, res) => {
+
   try {
+
     var name = req.body.name;
+
     var color = req.body.color;
+
     var size = req.body.size;
+
     var url = req.body.url;
 
-    var response = pool.query('INSERT INTO main_table (shoe_name,shoe_color,shoe_size,shoe_url) VALUES ($1,$2,$3,$4)',[name,color,size,url]);
-    if (response) {
-      console.log('done;');
-    }
-    res.json({success: true});
-    console.log('success inserting');
-     
-  } catch (error) {
-    console.log(error);
-  }
-});
 
+
+    var response = pool.query('INSERT INTO main_table (shoe_name,shoe_color,shoe_size,shoe_url) VALUES ($1,$2,$3,$4)',[name,color,size,url]);
+
+    if (response) {
+
+      console.log('done;');
+
+    }
+
+    res.json({success: true});
+
+    console.log('success inserting');
+
+     
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+});
+//-------------------------------------------------------------
+//  INVENTORY PAGE
+//-------------------------------------------------------------
 app.get('/inventory', (req, res) => res.render('pages/adminInventory'));
+//-------------------------------------------------------------
+//  GET THE INVENTORY FROM DB (NOT SHOWN TO THE USER)
+//-------------------------------------------------------------
+
 app.get('/getInventory', async (req, res) => {
-  var result = await pool.query("SELECT * FROM main_table");
-  console.log(result);
-  console.log(typeof(result));
-  res.render('pages/adminInventory', result, rmWhitespace);
-  /*res.write("<table>");
-    res.write("<tr>");
-    for(var column in result.fields){
-        res.write("<td><label>" + result.fields[column].name + "</label></td>");
-    }
-    res.write("</tr>");
-    for(var row in result.rows){
-        res.write("<tr>");
-        for(var column in result.rows[row]){
-            res.write("<td><label>" + result.rows[row][column] + "</label></td>");       
-        }
-        res.write("</tr>");         
-    }
-    res.write("</table>");*/
+
+  var resultsDb = await pool.query("SELECT * FROM main_table");
+
+  //var to send to the render page
+  result={result: resultsDb};
+
+  res.render('pages/adminInventory', result);
+
   });
